@@ -12,11 +12,14 @@ class _Opcodes {
         this.codes.push(name);
         return this.codes.length - 1;
     }
-
     list() {
         const codes: {[key: string]: string } = {};
-        this.codes.forEach((c, i) => codes[`0x${i.toString(16)}`] = c);
+        this.codes.forEach((c, i) => codes[i.hex(0, true)] = c);
         return codes
+    }
+
+    getName(index: number) {
+        return this.codes[index];
     }
 }
 

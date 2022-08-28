@@ -18,7 +18,7 @@ class Eeprom {
     addInstruction(a: InstructionProps) {
         const { opcode, steps } = a;
         
-        const start = opcode === 0 ? 0 : opcode * 32;
+        const start = opcode * 32;
         steps.forEach((step, offset) => {
             this.buf[start + 0 * this.blockSize + offset] = step.read || 0x0;
             this.buf[start + 1 * this.blockSize + offset] = step.write || 0x0;
