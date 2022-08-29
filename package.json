@@ -1,18 +1,22 @@
 {
   "name": "microcode",
   "version": "1.0.0",
-  "description": "",
+  "description": "Trilobyte Instructions & Microcode Builder",
   "type": "commonjs",
   "scripts": {
-    "watch": "tsc -w",
-    "dev": "nodemon ./dist/index.js",
-    "start": "node ./dist/index.js | hexdump -e '\"%04.4_Ax\n\"' -e '\"%04.4_ax  \" 32/1 \"%02x \" \"\n\"' "
+    "dev": "concurrently \"nodemon ./dist/index.js\" \"npm run doc --quiet\" \"typedoc --watch ./src\"",
+    "prebuild": "tsc && npm run doc --quiet",
+    "build": "node ./dist/index.js bin",
+    "write": "minipro -p AT28C256 -w ./binaries/microcode.bin -s",
+    "doc": "typedoc ./src"
   },
-  "author": "",
+  "author": "Stephen Young <stephenyoung7267@gmail.com",
+  "homepage": "https://www.trilobyte.io",
   "license": "ISC",
   "dependencies": {
     "@types/node": "^18.7.13",
     "chalk": "^4.1.2",
+    "concurrently": "^7.3.0",
     "nodemon": "^2.0.15",
     "typescript": "^4.8.2"
   },
@@ -21,6 +25,7 @@
     "eslint": "^8.17.0",
     "jsdoc": "^3.6.10",
     "prettier": "2.6.1",
-    "prettier-eslint": "^15.0.1"
+    "prettier-eslint": "^15.0.1",
+    "typedoc": "^0.23.11"
   }
 }

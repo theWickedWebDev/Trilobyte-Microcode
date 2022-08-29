@@ -1,16 +1,17 @@
-import './lib/Number'; // Custom Number Prototype
-import EepromWriter from './classes/Eeprom';
-import * as Instructions from './Instructions';
+const args = process.argv.slice(2);
+const shouldBuildBinary = args.findIndex(a => a === 'bin') !== -1;
+
+import './lib/Number';      // Custom Number Prototype
+import './lib/Array';       // Custom Array Prototype
+import './Instructions';    // Adds Instructions
 import Logger from './lib/logger';
+
+import { EepromWriter, InstructionSet }from './classes';
+
 const Microcode = new EepromWriter();
 
-for (let i in Object.values(Instructions)) {
-    Microcode.addInstruction(Object.values(Instructions)[i]);
-}
+Object.values(InstructionSet.set).map(i => Microcode.addInstruction(i));
 
-const data = new Array(128).fill(0).map((_, i) => i);
-Logger(Microcode.buf);
-// Microcode.dump();
+Logger(Microcode.buf, 32);
 
-// console.log(Opcodes.list());
-
+if (shouldBuildBinary) Microcode.dump();

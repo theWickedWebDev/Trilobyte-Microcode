@@ -1,0 +1,7 @@
+declare global {
+    interface Number {
+        hex(pad: number, prefix: boolean) : string;
+    }
+}
+
+export {}
